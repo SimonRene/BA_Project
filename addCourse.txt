@@ -1,0 +1,2 @@
+INSERT INTO Courses(Designation)
+VALUES ('{}');

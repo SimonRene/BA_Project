@@ -1,0 +1,18 @@
+CREATE TABLE Completed (
+    completedID int NOT NULL GENERATED ALWAYS AS IDENTITY,
+    ID int NOT NULL,
+    TNr int NOT NULL,
+    Date varchar(255),
+    StartTime varchar(255),
+    EndTime varchar(255),
+    PRIMARY KEY(completedID),
+    CONSTRAINT fk_athlete
+        FOREIGN KEY(ID) 
+	        REFERENCES Athletes(ID)
+                ON DELETE CASCADE,
+
+    CONSTRAINT fk_course
+        FOREIGN KEY(TNr) 
+	        REFERENCES Courses(TNr)
+                ON DELETE CASCADE
+);

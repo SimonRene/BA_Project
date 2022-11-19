@@ -1,0 +1,1 @@
+SELECT TNr FROM Courses;

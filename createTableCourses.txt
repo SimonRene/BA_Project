@@ -1,0 +1,5 @@
+CREATE TABLE Courses (
+    TNr int NOT NULL GENERATED ALWAYS AS IDENTITY,
+    Designation varchar(255),
+    PRIMARY KEY(TNr)
+);

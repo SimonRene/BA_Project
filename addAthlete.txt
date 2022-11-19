@@ -1,0 +1,2 @@
+INSERT INTO Athletes(Name, Weight, Size, Gender)
+VALUES ('{}', {}, {}, '{}');
