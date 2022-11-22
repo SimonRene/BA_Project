@@ -1,0 +1,2 @@
+INSERT INTO Completed(ID, TNr, Date, StartTime, EndTime)
+VALUES ({}, {}, '{}', '{}','{}');

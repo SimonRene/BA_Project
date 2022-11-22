@@ -26,9 +26,13 @@ class myManager:
         # "commit as you go"
         with self.engine.connect() as conn:
             #conn.execute(("CREATE TABLE Persons3 (PersonID int,LastName varchar(255));"))
-            #conn.execute((athleteTableText))
-            #conn.execute((courseTableText))
-            conn.execute((completedTableText))
+            #if not self.engine.dialect.has_table(self.engine, "Athletes"):
+            if not self.engine.inspect(self.engine).has_table("Athletes"):
+                conn.execute((athleteTableText))
+            if not self.engine.dialect.has_table(self.engine, "Courses"):
+                conn.execute((courseTableText))
+            if not self.engine.dialect.has_table(self.engine, "Completed"):
+                conn.execute((completedTableText))
             #conn.commit()
     
     def addTestData(self):
@@ -90,21 +94,29 @@ class myManager:
         addAthleteFormated = addAthleteText.format(Name,Weight,Size,Gender)
 
         with self.engine.connect() as conn:
-            #conn.execute(("CREATE TABLE Persons3 (PersonID int,LastName varchar(255));"))
             conn.execute((addAthleteFormated))
     
-    def addCourse(self, Designation):
+    def addCourse(self, Designation, Description):
         if (not hasattr(self,'engine')):
             self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
         addCourseFile = open("addCourse.txt", mode='r', encoding='utf-8')
         addCourseText = addCourseFile.read()
         addCourseFile.close()
-        addCourseFormated = addCourseText.format(Designation)
+        addCourseFormated = addCourseText.format(Designation, Description)
 
         with self.engine.connect() as conn:
-            #conn.execute(("CREATE TABLE Persons3 (PersonID int,LastName varchar(255));"))
             conn.execute((addCourseFormated))
     
+    def addCompleted(self, ID, TNr, Date, StartTime, EndTime):
+        self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+        addCompletedFile = open("addCompleted.txt", mode='r', encoding='utf-8')
+        addCompletedText = addCompletedFile.read()
+        addCompletedFile.close()
+        addCompletedFormated = addCompletedText.format(ID,TNr,Date,StartTime,EndTime)
+
+        with self.engine.connect() as conn:
+            conn.execute((addCompletedFormated))
+
     def deleteCourse(self, TNr):
         if (not hasattr(self,'engine')):
             self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)

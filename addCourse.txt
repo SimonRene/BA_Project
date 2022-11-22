@@ -1,2 +1,2 @@
-INSERT INTO Courses(Designation)
-VALUES ('{}');
+INSERT INTO Courses(Designation, Description)
+VALUES ('{}','{}');
