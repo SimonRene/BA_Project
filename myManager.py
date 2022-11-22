@@ -27,11 +27,11 @@ class myManager:
         with self.engine.connect() as conn:
             #conn.execute(("CREATE TABLE Persons3 (PersonID int,LastName varchar(255));"))
             #if not self.engine.dialect.has_table(self.engine, "Athletes"):
-            if not self.engine.inspect(self.engine).has_table("Athletes"):
+            if not self.engine.dialect.has_table(conn,"athletes"):
                 conn.execute((athleteTableText))
-            if not self.engine.dialect.has_table(self.engine, "Courses"):
+            if not self.engine.dialect.has_table(conn, "courses"):
                 conn.execute((courseTableText))
-            if not self.engine.dialect.has_table(self.engine, "Completed"):
+            if not self.engine.dialect.has_table(conn, "completed"):
                 conn.execute((completedTableText))
             #conn.commit()
     

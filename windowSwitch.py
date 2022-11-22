@@ -12,11 +12,9 @@ class SampleApp(tk.Tk):
 
         self.man = myManager.myManager()
 
-        #self.man.initDB()
-        #self.man.addTestData()
-        #self.man.getCourseNumbers()
+        self.man.initDB()
 
-        self.man.getCourseNumbers()
+        #self.man.getCourseNumbers()
 
         self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
 
