@@ -1,12 +1,14 @@
 from sqlalchemy import create_engine
 
+SQL = 'postgresql://postgres@localhost/Training'
+
 class myManager:
     def manage(self):
         print("MANAGING...")
 
     
     def initDB(self):
-        self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+        self.engine = create_engine(SQL, pool_pre_ping=True)
 
         #engine = create_engine("postgresql://postgres@localhost/BAdb", echo=True, future=True)
 
@@ -36,7 +38,7 @@ class myManager:
             #conn.commit()
     
     def addTestData(self):
-        self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+        self.engine = create_engine(SQL, pool_pre_ping=True)
         coursesTestFile = open("addTestData02.txt", mode='r', encoding='utf-8')
         coursesTestText = coursesTestFile.read()
         coursesTestFile.close()
@@ -58,7 +60,7 @@ class myManager:
             conn.execute((completedTestText))
 
     def getCourseNumbers(self):
-        self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+        self.engine = create_engine(SQL, pool_pre_ping=True)
         courseNumbersSQL = "getCourseNumbers.txt"
         courseNumbersSQLFile = open("getCourseNumbers.txt", mode='r', encoding='utf-8')
         courseNumbersSQLText = courseNumbersSQLFile.read()
@@ -73,7 +75,7 @@ class myManager:
         return courseNumbers
     
     def getAthleteNumbers(self):
-        self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+        self.engine = create_engine(SQL, pool_pre_ping=True)
         courseNumbersSQLFile = open("getAthleteNumbers.txt", mode='r', encoding='utf-8')
         courseNumbersSQLText = courseNumbersSQLFile.read()
         courseNumbersSQLFile.close()
@@ -87,7 +89,7 @@ class myManager:
         return courseNumbers
     
     def addAthlete(self, Name, Weight, Size, Gender):
-        self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+        self.engine = create_engine(SQL, pool_pre_ping=True)
         addAthleteFile = open("addAthlete.txt", mode='r', encoding='utf-8')
         addAthleteText = addAthleteFile.read()
         addAthleteFile.close()
@@ -98,7 +100,7 @@ class myManager:
     
     def addCourse(self, Designation, Description):
         if (not hasattr(self,'engine')):
-            self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+            self.engine = create_engine(SQL, pool_pre_ping=True)
         addCourseFile = open("addCourse.txt", mode='r', encoding='utf-8')
         addCourseText = addCourseFile.read()
         addCourseFile.close()
@@ -108,7 +110,7 @@ class myManager:
             conn.execute((addCourseFormated))
     
     def addCompleted(self, ID, TNr, Date, StartTime, EndTime):
-        self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+        self.engine = create_engine(SQL, pool_pre_ping=True)
         addCompletedFile = open("addCompleted.txt", mode='r', encoding='utf-8')
         addCompletedText = addCompletedFile.read()
         addCompletedFile.close()
@@ -119,7 +121,7 @@ class myManager:
 
     def deleteCourse(self, TNr):
         if (not hasattr(self,'engine')):
-            self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+            self.engine = create_engine(SQL, pool_pre_ping=True)
         deleteCourseFile = open("deleteCourse.txt", mode='r', encoding='utf-8')
         deleteCourseText = deleteCourseFile.read()
         deleteCourseFile.close()
@@ -130,7 +132,7 @@ class myManager:
 
     def deleteAthlete(self, ID):
         if (not hasattr(self,'engine')):
-            self.engine = create_engine('postgresql://postgres@localhost/Training', pool_pre_ping=True)
+            self.engine = create_engine(SQL, pool_pre_ping=True)
         deleteAthleteFile = open("deleteAthlete.txt", mode='r', encoding='utf-8')
         deleteAthleteText = deleteAthleteFile.read()
         deleteAthleteFile.close()
