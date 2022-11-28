@@ -88,6 +88,20 @@ class myManager:
                 courseNumbers.append(n[0])
         return courseNumbers
     
+    def getTrainingDates(self):
+        self.engine = create_engine(SQL, pool_pre_ping=True)
+        courseNumbersSQLFile = open("getTrainingDates.txt", mode='r', encoding='utf-8')
+        courseNumbersSQLText = courseNumbersSQLFile.read()
+        courseNumbersSQLFile.close()
+        courseNumbers = []
+        with self.engine.connect() as conn:
+            #conn.execute(("CREATE TABLE Persons3 (PersonID int,LastName varchar(255));"))
+            data1 = conn.execute((courseNumbersSQLText))
+            dates = data1.fetchall()
+            #for n in numbers:
+             #   courseNumbers.append(n[0])
+        return dates
+    
     def addAthlete(self, Name, Weight, Size, Gender):
         self.engine = create_engine(SQL, pool_pre_ping=True)
         addAthleteFile = open("addAthlete.txt", mode='r', encoding='utf-8')
@@ -140,3 +154,14 @@ class myManager:
 
         with self.engine.connect() as conn:
             conn.execute((deleteAthleteFormated))
+
+    def deleteCompleted(self, completedID):
+        if (not hasattr(self,'engine')):
+            self.engine = create_engine(SQL, pool_pre_ping=True)
+        deleteCourseFile = open("deleteCompleted.txt", mode='r', encoding='utf-8')
+        deleteCourseText = deleteCourseFile.read()
+        deleteCourseFile.close()
+        deleteCourseFormated = deleteCourseText.format(completedID)
+
+        with self.engine.connect() as conn:
+            conn.execute((deleteCourseFormated))

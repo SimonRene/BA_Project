@@ -1,0 +1,2 @@
+DELETE FROM Completed
+WHERE completedID = {}; 

@@ -3,8 +3,8 @@ CREATE TABLE Completed (
     ID int NOT NULL,
     TNr int NOT NULL,
     Date varchar(255),
-    StartTime varchar(255),
-    EndTime varchar(255),
+    StartTime time,
+    EndTime time,
     PRIMARY KEY(completedID),
     CONSTRAINT fk_athlete
         FOREIGN KEY(ID) 

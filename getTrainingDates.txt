@@ -1,0 +1,1 @@
+SELECT d.completedID, a.ID, c.TNr, a.Name, c.Designation, d.Date, d.StartTime, d.EndTime FROM completed as d JOIN Athletes as a ON d.ID = a.ID JOIN courses as c ON d.TNr = c.TNr

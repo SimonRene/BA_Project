@@ -27,7 +27,7 @@ class SampleApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, PageThree):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -322,7 +322,7 @@ class PageThree(tk.Frame):
 
         # Button - Delete Athlete
         self.deleteTrainingButton = tk.Button(gridFrame, text="Delete Training Data",
-                           command=lambda: (controller.man.deleteCourse(self.variableID.get()), self.refresh() ))
+                           command=lambda: controller.show_frame("PageFour"))
         self.deleteTrainingButton.grid(row=3,column=2,columnspan=2)
 
 
@@ -389,6 +389,161 @@ class PageThree(tk.Frame):
         for string in athleteNumbers:
             menuAthlete.add_command(label=string, 
                              command=lambda value=string: self.variableAthleteID.set(value))
+
+class PageFour(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Delete training data", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+
+        gridFrame = tk.Frame(self)
+
+        self.testData = [["Hans",5],
+                    ["Anna",14],
+                    ["Lisa",24],
+                    ["Sandra",12],
+                    ["Anna",14],
+                    ["Lisa",24],
+                    ["Sandra",12],
+                    ["Anna",14],
+                    ["Lisa",24],
+                    ["Sandra",12],
+                    ["Anna",14],
+                    ["Lisa",24],
+                    ["Sandra",12],
+                    ["Anna",14],
+                    ["Lisa",24],
+                    ["Sandra",12],
+                    ["Anna",14],
+                    ["Lisa",24],
+                    ["Sandra",12],
+                    ["Anna",14],
+                    ["Lisa",24],
+                    ["Sandra",12],
+                    ["Anna",14],
+                    ["Lisa",24],
+                    ["Sandra",12],
+                    ["Anna",14],
+                    ["Lisa",24],
+                    ["Sandra",12],
+                    ["Gerd",15]
+                    ]
+
+        test2 = ["Hallo1","Hallo2", "Hallo3"]
+
+        trainingDatesText = self.createList()
+
+        self.testVar = tk.StringVar(gridFrame)
+        self.testVar.set(trainingDatesText)
+        self.listView = tk.Listbox(gridFrame,width=50,height=12,listvariable=self.testVar)
+        self.listView.grid(row=0,column=0,columnspan=2)
+        #listView.insert(end,1)
+
+        scroll = tk.Scrollbar(
+            gridFrame,
+            orient='vertical',
+            command=self.listView.yview
+            )
+        scroll.grid(row=0,column=2,sticky='ns')
+        self.listView.yview_scroll(number=10 ,what='units')
+        '''
+        for athlete in testData:
+            tableLineText = tk.Label(gridFrame, text=athlete[0], font=controller.title_font)
+            tableLineButton = tk.Button(gridFrame, text="Delete Training", command=lambda: (controller.man.deleteCourse(self.deleteTraining(athlete[1])), self.refresh() ))
+            tableLineText.grid(row=tableLine, column=0)
+            tableLineButton.grid(row=tableLine, column=1)
+            tableLine+=1
+        '''
+
+        # Button - Delete Athlete
+        self.deleteTrainingButton = tk.Button(gridFrame, text="Delete Training Data",
+                           command=lambda: (self.deleteAthlete(), self.refresh() ))
+        self.deleteTrainingButton.grid(row=5,column=1,columnspan=1)
+
+        button = tk.Button(gridFrame, text="Back",
+                           command=lambda: controller.show_frame("PageThree"))
+        button.grid(row=5,column=0)
+        gridFrame.pack(padx=20,pady=20)
+    
+    def deleteAthlete(self):
+        id = self.listView.curselection()
+        self.controller.man.deleteCompleted(self.trainingDates[id[0]][0])
+    
+    def createList(self):
+        self.trainingDates = self.controller.man.getTrainingDates()
+
+        trainingDatesText = []
+
+        for tD in self.trainingDates:
+            dateText = tD[3] + " " + tD[4] + " " + tD[5] + " ("  + str(tD[6]) + " - "  + str(tD[7]) + ")"
+            trainingDatesText.append(dateText)
+        
+        return trainingDatesText
+
+    def refresh(self):
+        listText = self.createList()
+        self.testVar.set(listText)
+        '''
+        courseNumbers = self.controller.man.getCourseNumbers()
+        athleteNumbers = self.controller.man.getAthleteNumbers()
+        #print(courseNumbers)
+        if(len(courseNumbers) == 0):
+            self.noCourses = True
+            courseNumbers = ["0"]
+        else:
+            self.noCourses = False
+        if(len(athleteNumbers) == 0):
+            self.noAthletes = True
+            athleteNumbers = ["0"]
+        else:
+            self.noAthletes = False
+        self.variableCourseTNr.set(courseNumbers[0]) # default value
+        self.variableAthleteID.set(athleteNumbers[0]) # default value
+        #self.entryID.configure(courseNumbers)
+        menuCourse = self.entryCourseID["menu"]
+        menuCourse.delete(0, "end")
+        menuAthlete = self.entryAthleteID["menu"]
+        menuAthlete.delete(0, "end")
+
+        if not self.noCourses:
+            self.noCoursesLable.grid_remove()
+            self.labelCourseTNr.grid(row=1,column=2)
+            self.entryCourseID.grid(row=1,column=3)
+            #self.deleteButton.grid(row=1,column=3)
+        else:
+            self.noCoursesLable.grid(row=1,column=2)
+            self.labelCourseTNr.grid_remove()
+            self.entryCourseID.grid_remove()
+            #self.deleteButton.grid_remove()
+        
+        if not self.noAthletes:
+            self.noAthleetesLable.grid_remove()
+            self.labelAthleteID.grid(row=0,column=2)
+            self.entryAthleteID.grid(row=0,column=3)
+            #self.deleteButton.grid(row=1,column=3)
+        else:
+            self.noAthleetesLable.grid(row=0,column=2)
+            self.labelAthleteID.grid_remove()
+            self.entryAthleteID.grid_remove()
+            #self.deleteButton.grid_remove()
+
+        if not (self.noCourses or self.noAthletes):
+            self.saveTrainingButton.grid(row=2,column=2,columnspan=2)
+            self.deleteTrainingButton.grid(row=3,column=2,columnspan=2)
+        else:
+            self.saveTrainingButton.grid_remove()
+            self.deleteTrainingButton.grid_remove()
+
+        for string in courseNumbers:
+            menuCourse.add_command(label=string, 
+                             command=lambda value=string: self.variableCourseTNr.set(value))
+        for string in athleteNumbers:
+            menuAthlete.add_command(label=string, 
+                             command=lambda value=string: self.variableAthleteID.set(value))
+        '''
+
 
 if __name__ == "__main__":
     app = SampleApp()
