@@ -438,10 +438,7 @@ class PageFour(tk.Frame):
             command=self.listView.yview
             )
         scroll.grid(row=0,column=2,sticky='ns')
-        #self.listView.yview_scroll(number=10 ,what='units')
-
         self.listView.config(yscrollcommand = scroll.set)
-  
         scroll.config(command = self.listView.yview)
 
         # Button - Delete Training data

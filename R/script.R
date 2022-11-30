@@ -6,7 +6,7 @@ connect_to_db <- function() {
   db_port <- "5432"
   db_user <- "postgres"
   #dbListTables(con) 
-  return(dbConnect(dbConnect(RPostgres::Postgres(), dbname = db, host=host_db, port=db_port, user=db_user)))
+  return(dbConnect(RPostgres::Postgres(), dbname = db, host=host_db, port=db_port, user=db_user))
 }
 
 con <- connect_to_db()
@@ -42,7 +42,7 @@ task04(1)
 
 # Median of the training duration of a certain training over all athletes
 task05 <- function(trainingID) {
-  durations <- dbGetQuery(con, paste('SELECT (EndTime-StartTime) as duration FROM Completed WHERE TNr = ', trainingID, ' ;' ))
+  durations <- dbGetQuery(con, paste('SELECT EXTRACT(EPOCH FROM (EndTime - StartTime))/60 as duration FROM Completed WHERE TNr = ', trainingID, ' ;' ))
   print(durations)
   
   return (median(durations))
@@ -69,7 +69,7 @@ task07 <- function(trainingID) {
   print(plot + geom_boxplot() + geom_dotplot(binaxis = "x", stackdir = "center", dotsize = 0.5))
   #return (durations)
 }
-task07(1)
+task07(2)
 
 # Draw appropriate diagrams to visualize the data using ggplot
 # Average of the training duration over all athletes (i.e. per athlete average of the training duration over all trainings)
