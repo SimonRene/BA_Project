@@ -1,21 +1,15 @@
 
-con<-dbConnect(RPostgres::Postgres())
+connect_to_db <- function() {
+  library(DBI)
+  db <- "Training"  #name of  db
+  host_db <- "localhost"
+  db_port <- "5432"
+  db_user <- "postgres"
+  #dbListTables(con) 
+  return(dbConnect(dbConnect(RPostgres::Postgres(), dbname = db, host=host_db, port=db_port, user=db_user)))
+}
 
-library(DBI)
-
-db <- 'Training'  #provide the name of your db
-
-host_db <- 'localhost' #i.e. # i.e. 'ec2-54-83-201-96.compute-1.amazonaws.com'  
-
-db_port <- '5432'  # or any other port specified by the DBA
-
-db_user <- 'postgres'
-
-con <- dbConnect(RPostgres::Postgres(), dbname = db, host=host_db, port=db_port, user=db_user)  
-
-dbListTables(con) 
-
-
+con <- connect_to_db()
 
 # All workouts of a specific athlete
 task01 <- function(athleteID) {
