@@ -90,12 +90,12 @@ task08 <- function() {
   
   #durations$id <- as.factor(durations$id)
   
-  head(durations)
-  plot = ggplot(data, aes(x = id, y = avgduration))
+  #head(durations)
+  plot = ggplot(durations, aes(x = id, y = avgduration))
   print(plot + geom_col())
   
   
-  return (durations)
+  #return (durations)
   #'SELECT id, avg(EXTRACT(EPOCH FROM (EndTime - StartTime))/60) as avgDuration FROM Completed GROUP BY id'
 }
 
