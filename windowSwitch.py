@@ -28,7 +28,7 @@ class SampleApp(tk.Tk):
 
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("StartPage")
+        self.show_frame("PageFour")
 
     def show_frame(self, page_name):
         '''Show a frame for the given page name'''
@@ -438,7 +438,11 @@ class PageFour(tk.Frame):
             command=self.listView.yview
             )
         scroll.grid(row=0,column=2,sticky='ns')
-        self.listView.yview_scroll(number=10 ,what='units')
+        #self.listView.yview_scroll(number=10 ,what='units')
+
+        self.listView.config(yscrollcommand = scroll.set)
+  
+        scroll.config(command = self.listView.yview)
 
         # Button - Delete Training data
         self.deleteTrainingButton = tk.Button(gridFrame, text="Delete Training Data",
